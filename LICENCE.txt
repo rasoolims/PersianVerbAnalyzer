@@ -3,6 +3,12 @@ In the name of Allah
 Copyright (c) 2012 Mohammad Sadegh Rasooli (https://sites.google.com/site/rasoolims)
 Copyright (c) 2012 Supreme Council of Information and Communication Technology (SCICT) 
 
+<!> If you use this software in your research work, please cite to the following paper:
+- Mohammad Rasooli, Heshaam Faili, and Behrouz Minaei-Bidgoli. "Unsupervised Identification of Persian Compound Verbs", in Proceedings of the 10th Mexican international conference on Advances in Artificial Intelligence - Volume Part I (LNCS 7094), Pages 394-406, Puebla, Mexico, 2011. 
+In ACM library: http://dl.acm.org/citation.cfm?id=2178197.2178234&coll=DL&dl=GUIDE&CFID=97422849&CFTOKEN=39528935
+In Springer library: http://www.springerlink.com/content/n3r0181wu2h6p337/
+
+
 LICENCE:
 This software is free of charge under the GNU Public License. This means that you are free to use and distribute the treebank and that you are free to create derivative works, as long as they are also released under the GNU Public License. 
 
