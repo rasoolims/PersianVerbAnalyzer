@@ -21,7 +21,7 @@ namespace PersianVerbAnalyzer
             {
                 output.AppendLine(dependencyBasedToken.WordForm + "\t" + dependencyBasedToken.Lemma + "\t" +
                                   dependencyBasedToken.CPOSTag
-                                  + "\t" + dependencyBasedToken.HeadNumber + "\t" +
+                                  + "\t" + (dependencyBasedToken.HeadNumber+1).ToString() + "\t" +
                                   dependencyBasedToken.DependencyRelation);
             }
             File.WriteAllText("../../../testOutPut.txt",output.ToString());

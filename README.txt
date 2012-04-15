@@ -41,31 +41,32 @@ var analyzer = new SentenceAnalyzer("../../../Data/VerbList.txt");
             {
                 output.AppendLine(dependencyBasedToken.WordForm + "\t" + dependencyBasedToken.Lemma + "\t" +
                                   dependencyBasedToken.CPOSTag
-                                  + "\t" + dependencyBasedToken.HeadNumber + "\t" +
+                                  + "\t" + (dependencyBasedToken.HeadNumber+1).ToString() + "\t" +
                                   dependencyBasedToken.DependencyRelation);
             }
             File.WriteAllText("../../../testOutPut.txt",output.ToString());
 
 
 Output in "testOutPut.txt ":
-من	_	_	-1	_
-دارم	داشت#دار	V	4	PROG
-به	_	_	-1	_
-شما	_	_	-1	_
-می‌گویم	گفت#گو	V	-1	_
-که	_	_	-1	_
-این	_	_	-1	_
-صحبت‌ها	_	_	-1	_
-به	_	_	-1	_
-راحتی	_	_	-1	_
-گفته نخواهد شد	گفت#گو	V	-1	_
-و	_	_	-1	_
-من	_	_	-1	_
-با	_	_	-1	_
-شما	_	_	-1	_
-صحبت	_	_	17	NVE
-زیاد	_	_	-1	_
-خواهم کرد	کرد#کن	V	-1	_
+من	_	_	0	_
+دارم	داشت#دار	V	5	PROG
+به	_	_	0	_
+شما	_	_	0	_
+می‌گویم	گفت#گو	V	0	_
+که	_	_	0	_
+این	_	_	0	_
+صحبت‌ها	_	_	0	_
+به	_	_	0	_
+راحتی	_	_	0	_
+گفته نخواهد شد	گفت#گو	V	0	_
+و	_	_	0	_
+من	_	_	0	_
+با	_	_	0	_
+شما	_	_	0	_
+صحبت	_	_	18	NVE
+زیاد	_	_	0	_
+خواهم کرد	کرد#کن	V	0	_
+
 
 
 ---------------------------------------------------------------------------------------
