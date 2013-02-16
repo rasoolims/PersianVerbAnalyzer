@@ -1,6 +1,6 @@
 # In the name of Allah
 
-The following package consists of a rule-based verb inflector in Persian developed by [Mohammad Sadegh Rasooli](https://sites.google.com/site/rasoolims). The code was mainly used for preprocessing the [Persian dependency treebank](http://dadegan.ir/en). 
+The following package consists of a rule-based verb inflector in Persian developed by [Mohammad Sadegh Rasooli](http://www.cs.columbia.edu/~rasooli/). The code was mainly used for preprocessing the [Persian dependency treebank](http://dadegan.ir/en). 
 
 ### Note!
  - If you use this software in your research work, please cite to the following paper:
@@ -12,7 +12,7 @@ The following package consists of a rule-based verb inflector in Persian develop
 	In Springer library: <http://www.springerlink.com/content/n3r0181wu2h6p337/>
 
 
- - Please send the bugs and your questions to <rasooli.ms@gmail.com>
+ - Please send the bugs and your questions to <rasooli.ms{AT}gmail.com>
 
 
 ## How to use the code
