@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -221,6 +221,11 @@ namespace VerbInflector
             VerbShapes.Add("نمی‌توان", new List<VerbInflection>());
             VerbShapes["نمی‌توان"].Add(nemitavanInflection);
 
+    		VerbShapes.Add("میتوان", new List<VerbInflection>());
+			VerbShapes["میتوان"].Add(mitavanInflection);
+			VerbShapes.Add("نمیتوان", new List<VerbInflection>());
+			VerbShapes["نمیتوان"].Add(nemitavanInflection);
+
             var betavanInflection = new VerbInflection(new Verb("", "", "توان", "", "", VerbTransitivity.InTransitive, VerbType.SADEH, false, "?", "@", "!"), AttachedPronounType.AttachedPronoun_NONE, "",
                                                                    PersonType.PERSON_NONE,
                                                                    TenseFormationType.HAAL_ELTEZAMI, TensePositivity.POSITIVE);
@@ -270,8 +275,17 @@ namespace VerbInflector
                                                 inflection.TenseForm = TenseFormationType.HAAL_SAADEH;
                                             }
                                         }
-
-                                        foreach (string list in output)
+										var output2=new List<string>();
+										foreach (string list in output)
+										{
+											output2.Add (list);
+											if (list.Contains("می‌")){
+												var newshape=list.Replace("می‌","می");
+												output2.Add (newshape);
+											}
+												
+										}
+										foreach (string list in output2)
                                         {
                                             if (!(VerbShapes.ContainsKey(list)))
                                             {
