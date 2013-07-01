@@ -1348,8 +1348,8 @@ namespace VerbInflector
                                 stateList[i - 1].Clear();
                                 stateList[i].Clear();
                                 stateList[i - 1].Add(0);
-                                if (hasgozashtehsadegh)
-    								stateList[i - 1].Add(-2);
+                                //if (hasgozashtehsadegh)
+    								//stateList[i - 1].Add(-2);
                                 stateList[i].Add(0);
                             }
                         }
@@ -2830,8 +2830,8 @@ namespace VerbInflector
                                 stateList[i - 1].Clear();
                                 stateList[i].Clear();
                                 stateList[i - 1].Add(0);
-                                if (hasgozashtehsadegh)
-    								stateList[i - 1].Add(-2);
+                                //if (hasgozashtehsadegh)
+    								//stateList[i - 1].Add(-2);
                                 stateList[i].Add(0);
                             }
                         }
