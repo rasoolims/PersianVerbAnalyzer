@@ -14,6 +14,63 @@ namespace VerbInflector
 
         private static string verbDicPath="";
 
+		/// <summary>
+		/// The conjlist is a list containing all possible words that may stop a verb from getting a progressifier
+		/// </summary>
+		public static List<string> Conjlist=new List<string>();
+
+		public static void ConstructConjList()
+		{
+			Conjlist = new List<string> ();
+			Conjlist.Add ("و");
+			Conjlist.Add ("که");
+			Conjlist.Add ("اما");
+			Conjlist.Add ("تا");
+			Conjlist.Add ("گرچه");
+			Conjlist.Add ("اگرچه");
+			Conjlist.Add ("چرا");
+			Conjlist.Add ("یا");
+			Conjlist.Add ("زیرا");
+			Conjlist.Add ("اگر");
+			Conjlist.Add ("لیکن");
+			Conjlist.Add ("چون");
+			Conjlist.Add ("همچنین");
+			Conjlist.Add ("چرا‌که");
+			Conjlist.Add ("ولی");
+			Conjlist.Add ("هر‌چند");
+			Conjlist.Add ("چراکه");
+			Conjlist.Add ("-");
+			Conjlist.Add ("هرچند");
+			Conjlist.Add ("وگرنه");
+			Conjlist.Add ("چنانچه");
+			Conjlist.Add ("بلکه");
+			Conjlist.Add ("والا");
+			Conjlist.Add ("هرچه");
+			Conjlist.Add ("ولی‌");
+			Conjlist.Add ("ولیکن");
+			Conjlist.Add ("بس‌که");
+			Conjlist.Add ("ولو");
+			Conjlist.Add ("لکن");
+			Conjlist.Add ("یعنی");
+			Conjlist.Add ("هنوز");
+			Conjlist.Add ("مگر");
+			Conjlist.Add ("خواه");
+			Conjlist.Add ("پس");
+			Conjlist.Add ("چو");
+			Conjlist.Add ("اینکه");
+			Conjlist.Add ("چه");
+			Conjlist.Add ("بنابراین");
+			Conjlist.Add ("الی");
+			Conjlist.Add ("وقتی");
+			Conjlist.Add ("اگه");
+			Conjlist.Add ("منتهی");
+			Conjlist.Add ("،");
+			Conjlist.Add ("اگرنه");
+			Conjlist.Add ("منتها");
+			Conjlist.Add ("بی‌آنکه");
+			Conjlist.Add ("والّا");
+		}
+
         public static Dictionary<string, int> StaticDic = new Dictionary<string, int>();
 
         /// <summary>
@@ -24,6 +81,8 @@ namespace VerbInflector
         /// <returns></returns>
         private static Dictionary<int, List<VerbInflection>> GetVerbParts(string[] sentence, string[] posSentence)
         {
+			if (Conjlist.Count == 0)
+				ConstructConjList ();
             var dic = new Dictionary<int, List<VerbInflection>>();
             if (verbDic == null)
             {
@@ -128,6 +187,8 @@ namespace VerbInflector
         /// <returns></returns>
         private static Dictionary<int, List<VerbInflection>> GetVerbParts(string[] sentence)
         {
+			if (Conjlist.Count == 0)
+				ConstructConjList ();
             var dic = new Dictionary<int, List<VerbInflection>>();
             if (verbDic == null)
             {
@@ -194,7 +255,11 @@ namespace VerbInflector
                                     value = j;
                                     break;
                                 }
+								else
+									break;
                             }
+							if(Conjlist.Contains(sentence[j]))
+								break;
                         }
                         if (value > 0)
                         {
@@ -223,7 +288,12 @@ namespace VerbInflector
                                     value = j;
                                     break;
                                 }
+								else
+									break;
+
                             }
+							if(Conjlist.Contains(sentence[j]))
+								break;
                         }
                         if (value > 0)
                         {
@@ -238,14 +308,14 @@ namespace VerbInflector
                 {
                     if (mostamars.ContainsKey(i))
                     {
-                        var mostamarVal = new KeyValuePair<string, int>();
+						var mostamarVal = new MostamarSaz((VerbInflection)initDic[i].Value,-1,"");
                         if (initDic[i].Value.TenseForm == TenseFormationType.HAAL_SAADEH || initDic[i].Value.TenseForm == TenseFormationType.HAAL_ELTEZAMI)
                         {
-                            mostamarVal = new KeyValuePair<string, int>("MOSTAMAR_SAAZ_HAAL", mostamars[i]);
+							mostamarVal = new MostamarSaz((VerbInflection)initDic[i].Value, mostamars[i],"MOSTAMAR_SAAZ_HAAL");
                         }
                         if (initDic[i].Value.TenseForm == TenseFormationType.GOZASHTEH_SADEH)
                         {
-                            mostamarVal = new KeyValuePair<string, int>("MOSTAMAR_SAAZ_GOZASHTEH", mostamars[i]);
+							mostamarVal =new MostamarSaz((VerbInflection)initDic[i].Value, mostamars[i],"MOSTAMAR_SAAZ_GOZASHTEH");
 
                         }
                         bestDic.Add(i, new KeyValuePair<string, object>(initDic[i].Key, mostamarVal));
@@ -303,7 +373,11 @@ namespace VerbInflector
                                     value = j;
                                     break;
                                 }
+								else
+									break;
                             }
+							if(Conjlist.Contains(sentence[j]))
+								break;
                         }
                         if (value > 0)
                         {
@@ -332,7 +406,11 @@ namespace VerbInflector
                                     value = j;
                                     break;
                                 }
+								else
+									break;
                             }
+							if(Conjlist.Contains(sentence[j]))
+								break;
                         }
                         if (value > 0)
                         {
@@ -347,14 +425,14 @@ namespace VerbInflector
                 {
                     if (mostamars.ContainsKey(i))
                     {
-                        var mostamarVal = new KeyValuePair<string, int>();
+						var mostamarVal =new MostamarSaz((VerbInflection)initDic[i].Value,-1,"");
                         if (initDic[i].Value.TenseForm == TenseFormationType.HAAL_SAADEH || initDic[i].Value.TenseForm == TenseFormationType.HAAL_ELTEZAMI)
                         {
-                            mostamarVal = new KeyValuePair<string, int>("MOSTAMAR_SAAZ_HAAL", mostamars[i]);
+							mostamarVal = new MostamarSaz((VerbInflection)initDic[i].Value,mostamars[i], "MOSTAMAR_SAAZ_HAAL");
                         }
                         if (initDic[i].Value.TenseForm == TenseFormationType.GOZASHTEH_SADEH)
                         {
-                            mostamarVal = new KeyValuePair<string, int>("MOSTAMAR_SAAZ_GOZASHTEH", mostamars[i]);
+							mostamarVal = new MostamarSaz((VerbInflection)initDic[i].Value,mostamars[i],"MOSTAMAR_SAAZ_GOZASHTEH");
 
                         }
                         bestDic.Add(i, new KeyValuePair<string, object>(initDic[i].Key, mostamarVal));
@@ -389,7 +467,10 @@ namespace VerbInflector
             {
                 if (bestDic[i].Value is VerbInflection)
                 {
+					bool ispassive=false;
                     var verbValue = ((VerbInflection)bestDic[i].Value).VerbRoot;
+					if (((VerbInflection)bestDic[i].Value).Passivity==TensePassivity.PASSIVE)
+						ispassive=true;
                     if (VerbList.CompoundVerbDic.ContainsKey(verbValue))
                     {
                         for (int j = i - 1; j >= 0; j--)
@@ -409,16 +490,19 @@ namespace VerbInflector
                                             bestDic[j - 1].Key))
                                     {
 
-                                        var item1 = new KeyValuePair<string, object>(bestDic[j].Key,
-                                                                                     new KeyValuePair<string, int>(
-                                                                                         "NON-VERBAL-ELEMENT", i));
-                                        bestDic[j] = item1;
-                                        var item2 = new KeyValuePair<string, object>(bestDic[j - 1].Key,
-                                                                                     new KeyValuePair<string, int>(
-                                                                                        "VERBAL-PREPOSIOTION", i));
-                                        bestDic[j - 1] = item2;
-                                        i = j - 2;
-                                        break;
+										if(!ispassive || (ispassive && VerbList.CompoundVerbDic[verbValue][bestDic[j].Key][bestDic[j - 1].Key]))
+										{
+	                                        var item1 = new KeyValuePair<string, object>(bestDic[j].Key,
+	                                                                                     new KeyValuePair<string, int>(
+	                                                                                         "NON-VERBAL-ELEMENT", i));
+	                                        bestDic[j] = item1;
+	                                        var item2 = new KeyValuePair<string, object>(bestDic[j - 1].Key,
+	                                                                                     new KeyValuePair<string, int>(
+	                                                                                        "VERBAL-PREPOSIOTION", i));
+	                                        bestDic[j - 1] = item2;
+	                                        i = j - 2;
+	                                        break;
+										}
 
                                     }
                                     else if ((VerbList.CompoundVerbDic[verbValue][bestDic[j].Key].ContainsKey("") ||
@@ -427,7 +511,8 @@ namespace VerbInflector
                                     {
                                         if (j <= 1 || !(j > 1 && (VerbList.CompoundVerbDic[verbValue].ContainsKey(bestDic[j - 1].Key) && VerbList.CompoundVerbDic[verbValue][bestDic[j - 1].Key].ContainsKey(""))))
                                         {
-
+											if(!ispassive || (ispassive && VerbList.CompoundVerbDic[verbValue][bestDic[j].Key][""]))
+											{
                                             var item1 = new KeyValuePair<string, object>(bestDic[j].Key,
                                                                                          new KeyValuePair
                                                                                              <string, int>(
@@ -435,6 +520,7 @@ namespace VerbInflector
                                             bestDic[j] = item1;
                                             i = j - 1;
                                             break;
+											}
                                         }
                                     }
                                 }
@@ -445,6 +531,8 @@ namespace VerbInflector
                                         if (VerbList.CompoundVerbDic[verbValue][outlemmas[j]].ContainsKey("") &&
                                             posTokens[j] != "P")
                                         {
+											if(!ispassive || (ispassive && VerbList.CompoundVerbDic[verbValue][bestDic[j].Key][""]))
+											{
                                             var item1 = new KeyValuePair<string, object>(bestDic[j].Key,
                                                                                          new KeyValuePair
                                                                                              <string, int>(
@@ -452,6 +540,7 @@ namespace VerbInflector
                                             bestDic[j] = item1;
                                             i = j - 1;
                                             break;
+											}
                                         }
                                     }
                                 }
@@ -467,6 +556,102 @@ namespace VerbInflector
                         }
                     }
                 }
+				else if(bestDic[i].Value is MostamarSaz)
+				{
+					var thisValue=(MostamarSaz)(bestDic[i].Value);
+					if (thisValue.Type=="MOSTAMAR_SAAZ_HAAL" ||  thisValue.Type=="MOSTAMAR_SAAZ_GOZASHTEH")
+					{
+						var verbValue =thisValue.Inflection.VerbRoot;
+						var ispassive=false;
+						if (thisValue.Inflection.Passivity==TensePassivity.PASSIVE)
+							ispassive=true;
+						if (VerbList.CompoundVerbDic.ContainsKey(verbValue))
+						{
+							for (int j = i - 1; j >= 0; j--)
+							{
+								if (posTokens[j] == "DET")
+								{
+									
+									continue;
+								}
+								if (posTokens[j] == "N")
+								{
+									
+									if (VerbList.CompoundVerbDic[verbValue].ContainsKey(bestDic[j].Key))
+									{
+										if (j > 0 &&
+										    VerbList.CompoundVerbDic[verbValue][bestDic[j].Key].ContainsKey(
+											bestDic[j - 1].Key))
+										{
+											if(!ispassive || (ispassive && VerbList.CompoundVerbDic[verbValue][bestDic[j].Key][bestDic[j - 1].Key]))
+											{
+											var item1 = new KeyValuePair<string, object>(bestDic[j].Key,
+											                                             new KeyValuePair<string, int>(
+												"NON-VERBAL-ELEMENT", i));
+											bestDic[j] = item1;
+											var item2 = new KeyValuePair<string, object>(bestDic[j - 1].Key,
+											                                             new KeyValuePair<string, int>(
+												"VERBAL-PREPOSIOTION", i));
+											bestDic[j - 1] = item2;
+											i = j - 2;
+											break;
+											}
+											
+										}
+										else if ((VerbList.CompoundVerbDic[verbValue][bestDic[j].Key].ContainsKey("") ||
+										          VerbList.CompoundVerbDic[verbValue][outlemmas[j]].ContainsKey("")) &&
+										         posTokens[j] != "P")
+										{
+											if (j <= 1 || !(j > 1 && (VerbList.CompoundVerbDic[verbValue].ContainsKey(bestDic[j - 1].Key) && VerbList.CompoundVerbDic[verbValue][bestDic[j - 1].Key].ContainsKey(""))))
+											{
+												if(!ispassive || (ispassive && VerbList.CompoundVerbDic[verbValue][bestDic[j].Key][""]))
+												{
+												var item1 = new KeyValuePair<string, object>(bestDic[j].Key,
+												                                             new KeyValuePair
+												                                             <string, int>(
+													"NON-VERBAL-ELEMENT", i));
+												bestDic[j] = item1;
+												bestDic[i]=new KeyValuePair<string, object>(bestDic[i].Key,thisValue.Inflection);
+												i = j - 1;
+												break;
+												}
+											}
+										}
+									}
+									else if (VerbList.CompoundVerbDic[verbValue].ContainsKey(outlemmas[j]))
+									{
+										if (VerbList.CompoundVerbDic[verbValue][outlemmas[j]].ContainsKey(""))
+										{
+											if (VerbList.CompoundVerbDic[verbValue][outlemmas[j]].ContainsKey("") &&
+											    posTokens[j] != "P")
+											{
+												if(!ispassive || (ispassive && VerbList.CompoundVerbDic[verbValue][bestDic[j].Key][""]))
+												{
+												var item1 = new KeyValuePair<string, object>(bestDic[j].Key,
+												                                             new KeyValuePair
+												                                             <string, int>(
+													"NON-VERBAL-ELEMENT", i));
+												bestDic[j] = item1;
+												bestDic[i]=new KeyValuePair<string, object>(bestDic[i].Key,thisValue.Inflection);
+												i = j - 1;
+												break;
+												}
+											}
+										}
+									}
+								}
+								else if (posTokens[j] == "V" || posTokens[j] == "PUNC" || posTokens[j] == "ADV" ||
+								         posTokens[j] == "POSTP" || sentence[j] == "را")
+								{
+									i = j - 1;
+									if (posTokens[j] == "V")
+										i = j + 1;
+									break;
+								}
+							}
+						}
+					}
+				}
             }
             return bestDic;
         }
@@ -485,16 +670,25 @@ namespace VerbInflector
                 if (bestDic[i].Value is VerbInflection)
                 {
                     var verbValue = ((VerbInflection)bestDic[i].Value).VerbRoot;
+						var ispassive=false;
+					if(((VerbInflection)bestDic[i].Value).Passivity==TensePassivity.PASSIVE)
+						ispassive=true;
                     if (VerbList.CompoundVerbDic.ContainsKey(verbValue))
                     {
                         for (int j = i - 1; j >= 0; j--)
                         {
+							if(bestDic[j].Value is VerbInflection){
+								i = j - 1;
+								break;
+							}
                             if (VerbList.CompoundVerbDic[verbValue].ContainsKey(bestDic[j].Key))
                             {
                                 if (j > 0 &&
                                     VerbList.CompoundVerbDic[verbValue][bestDic[j].Key].ContainsKey(
                                         bestDic[j - 1].Key))
                                 {
+									if(!ispassive || (ispassive && VerbList.CompoundVerbDic[verbValue][bestDic[j].Key][bestDic[j - 1].Key]))
+									{
                                     var item1 = new KeyValuePair<string, object>(bestDic[j].Key,
                                                                                  new KeyValuePair<string, int>(
                                                                                      "NON-VERBAL-ELEMENT", i));
@@ -505,21 +699,82 @@ namespace VerbInflector
                                     bestDic[j - 1] = item2;
                                     i = j - 2;
                                     break;
+									}
                                 }
                                 else if (VerbList.CompoundVerbDic[verbValue][bestDic[j].Key].ContainsKey(""))
                                 {
+									if(!ispassive || (ispassive && VerbList.CompoundVerbDic[verbValue][bestDic[j].Key][""]))
+									{
                                     var item1 = new KeyValuePair<string, object>(bestDic[j].Key,
                                                                                  new KeyValuePair<string, int>(
                                                                                      "NON-VERBAL-ELEMENT", i));
                                     bestDic[j] = item1;
                                     i = j - 1;
                                     break;
+									}
                                 }
                             }
                         }
                     }
                 }
-            }
+
+				else if(bestDic[i].Value is MostamarSaz)
+				{
+					var thisValue=(MostamarSaz)(bestDic[i].Value);
+					if (thisValue.Type=="MOSTAMAR_SAAZ_HAAL" ||  thisValue.Type=="MOSTAMAR_SAAZ_GOZASHTEH")
+					{
+						var verbValue =thisValue.Inflection.VerbRoot;
+						var ispassive=false;
+						if(thisValue.Inflection.Passivity==TensePassivity.PASSIVE)
+							ispassive=true;
+						if (VerbList.CompoundVerbDic.ContainsKey(verbValue))
+						{
+							for (int j = i - 1; j >= 0; j--)
+							{
+								if(bestDic[j].Value is VerbInflection){
+									i = j - 1;
+									break;
+								}
+								if (VerbList.CompoundVerbDic[verbValue].ContainsKey(bestDic[j].Key))
+								{
+									if (j > 0 &&
+									    VerbList.CompoundVerbDic[verbValue][bestDic[j].Key].ContainsKey(
+										bestDic[j - 1].Key))
+									{
+										if(!ispassive || (ispassive && VerbList.CompoundVerbDic[verbValue][bestDic[j].Key][bestDic[j - 1].Key]))
+										{
+										var item1 = new KeyValuePair<string, object>(bestDic[j].Key,
+										                                             new KeyValuePair<string, int>(
+											"NON-VERBAL-ELEMENT", i));
+										bestDic[j] = item1;
+										var item2 = new KeyValuePair<string, object>(bestDic[j - 1].Key,
+										                                             new KeyValuePair<string, int>(
+											"VERBAL-PREPOSIOTION", i));
+										bestDic[j - 1] = item2;
+										bestDic[i]=new KeyValuePair<string, object>(bestDic[i].Key,thisValue.Inflection);
+										i = j - 2;
+										break;
+										}
+									}
+									else if (VerbList.CompoundVerbDic[verbValue][bestDic[j].Key].ContainsKey(""))
+									{
+										if(!ispassive || (ispassive && VerbList.CompoundVerbDic[verbValue][bestDic[j].Key][""]))
+										{
+										var item1 = new KeyValuePair<string, object>(bestDic[j].Key,
+										                                             new KeyValuePair<string, int>(
+											"NON-VERBAL-ELEMENT", i));
+										bestDic[j] = item1;
+										bestDic[i]=new KeyValuePair<string, object>(bestDic[i].Key,thisValue.Inflection);
+										i = j - 1;
+										break;
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+            }	
             return bestDic;
         }
 
@@ -544,6 +799,12 @@ namespace VerbInflector
                     partialTree.Add(key, new KeyValuePair<string, KeyValuePair<int, object>>(value, new KeyValuePair<int, object>(-1, dic[key].Value)));
 
                 }
+				else if (dic[key].Value is MostamarSaz)
+				{
+					var newValue = (MostamarSaz)dic[key].Value;
+					partialTree.Add(key, new KeyValuePair<string, KeyValuePair<int, object>>(value, new KeyValuePair<int, object>(newValue.Head,newValue)));
+					
+				}
                 else if (dic[key].Value is KeyValuePair<string, int>)
                 {
                     var newValue = (KeyValuePair<string, int>)dic[key].Value;
@@ -603,6 +864,12 @@ namespace VerbInflector
                     partialTree.Add(key, new KeyValuePair<string, KeyValuePair<int, object>>(value, new KeyValuePair<int, object>(-1, dic[key].Value)));
 
                 }
+				else if (dic[key].Value is MostamarSaz)
+				{
+					var newValue = (MostamarSaz)dic[key].Value;
+					partialTree.Add(key, new KeyValuePair<string, KeyValuePair<int, object>>(value, new KeyValuePair<int, object>(newValue.Head,newValue)));
+
+				}
                 else if (dic[key].Value is KeyValuePair<string, int>)
                 {
                     var newValue = (KeyValuePair<string, int>)dic[key].Value;
@@ -725,6 +992,14 @@ namespace VerbInflector
                 else
                 {
                     int counter = 0;
+					bool hasgozashtehsadegh=false;
+					foreach (VerbInflection verbInflection in valuePair)
+					{
+						if (verbInflection.TenseForm==TenseFormationType.GOZASHTEH_SADEH){
+							hasgozashtehsadegh=true;
+							break;
+						}
+					}
                     foreach (VerbInflection verbInflection in valuePair)
                     {
                         counter++;
@@ -1251,6 +1526,7 @@ namespace VerbInflector
 
                         #endregion
 
+
                         #region state 5
 
                         if (stateList[i - 1].Contains(5))
@@ -1285,7 +1561,7 @@ namespace VerbInflector
                                 stateList[i - 1].Remove(5);
                                 stateList[i - 1].Remove(9);
                             }
-                            if (verbInflection.TenseForm == TenseFormationType.HAAL_SAADEH &&
+							if ((verbInflection.TenseForm == TenseFormationType.HAAL_SAADEH ||verbInflection.TenseForm == TenseFormationType.HAAL_ELTEZAMI)&&
                                 verbInflection.VerbRoot.PastTenseRoot == "بود" &&
                                 verbInflection.VerbRoot.Type == VerbType.SADEH &&
                                 verbInflection.Positivity == TensePositivity.POSITIVE)
@@ -1304,7 +1580,7 @@ namespace VerbInflector
                         if (stateList[i - 1].Contains(2))
                         {
                             if (verbInflection.IsPayehFelMasdari() && verbInflection.VerbRoot.PastTenseRoot != "شد" &&
-                                verbInflection.VerbRoot.Type == VerbType.SADEH)
+							    verbInflection.VerbRoot.Type == VerbType.SADEH && verbInflection.Positivity==TensePositivity.POSITIVE)//ToCheck
                             {
                                 stateList[i].Clear();
                                 if (!stateList[i].Contains(31))
@@ -1348,8 +1624,8 @@ namespace VerbInflector
                                 stateList[i - 1].Clear();
                                 stateList[i].Clear();
                                 stateList[i - 1].Add(0);
-                                if (hasgozashtehsadegh)
-    								stateList[i - 1].Add(-2);
+								if (hasgozashtehsadegh)
+									stateList[i - 1].Add(-2);
                                 stateList[i].Add(0);
                             }
                         }
@@ -2202,6 +2478,14 @@ namespace VerbInflector
                 else
                 {
                     int counter = 0;
+					bool hasGozashtehSadeh=false;
+					foreach (VerbInflection verbInflection in valuePair)
+					{
+						if (verbInflection.TenseForm==TenseFormationType.GOZASHTEH_SADEH){
+							hasGozashtehSadeh=true;
+							break;
+						}
+					}
                     foreach (VerbInflection verbInflection in valuePair)
                     {
                         counter++;
@@ -2761,7 +3045,27 @@ namespace VerbInflector
                                 stateList[i - 1].Remove(5);
                                 stateList[i - 1].Remove(9);
                             }
-                            if (verbInflection.TenseForm == TenseFormationType.HAAL_SAADEH &&
+							//ToCheck
+							if (verbInflection.TenseForm == TenseFormationType.GOZASHTEH_NAGHLI_SADEH &&
+							    verbInflection.VerbRoot.PastTenseRoot == "بود" &&
+							    verbInflection.VerbRoot.Type == VerbType.SADEH &&
+							    verbInflection.Positivity == TensePositivity.POSITIVE)
+							{
+								if (!stateList[i].Contains(52))
+									stateList[i].Add(52);
+								stateList[i - 1].Remove(5);
+								stateList[i - 1].Remove(9);
+							}
+							if(verbInflection.TenseForm == TenseFormationType.PAYEH_MAFOOLI &&
+							    verbInflection.VerbRoot.PastTenseRoot == "بود" &&
+							    verbInflection.VerbRoot.Type == VerbType.SADEH)
+							   {
+								if (!stateList[i].Contains(-3))
+									stateList[i].Add(-3);
+								stateList[i - 1].Remove(5);
+								stateList[i - 1].Remove(9);
+							}
+							if ((verbInflection.TenseForm == TenseFormationType.HAAL_SAADEH || verbInflection.TenseForm == TenseFormationType.HAAL_ELTEZAMI) &&
                                 verbInflection.VerbRoot.PastTenseRoot == "بود" &&
                                 verbInflection.VerbRoot.Type == VerbType.SADEH &&
                                 verbInflection.Positivity == TensePositivity.POSITIVE)
@@ -2780,7 +3084,7 @@ namespace VerbInflector
                         if (stateList[i - 1].Contains(2))
                         {
                             if (verbInflection.IsPayehFelMasdari() && verbInflection.VerbRoot.PastTenseRoot != "شد" &&
-                                verbInflection.VerbRoot.Type == VerbType.SADEH)
+							    verbInflection.VerbRoot.Type == VerbType.SADEH && verbInflection.Positivity==TensePositivity.POSITIVE)
                             {
                                 stateList[i].Clear();
                                 if (!stateList[i].Contains(31))
@@ -2827,11 +3131,13 @@ namespace VerbInflector
                             }
                             else
                             {
+								//TO Check
+
                                 stateList[i - 1].Clear();
                                 stateList[i].Clear();
                                 stateList[i - 1].Add(0);
-                                if (hasgozashtehsadegh)
-    								stateList[i - 1].Add(-2);
+								if (hasGozashtehSadeh)
+									stateList[i - 1].Add(-2);
                                 stateList[i].Add(0);
                             }
                         }
@@ -4252,7 +4558,7 @@ namespace VerbInflector
 
                     case 27:
                         tenseFormationType = TenseFormationType.GOZASHTEH_NAGHLI_SADEH;
-                        passivity = TensePassivity.PASSIVE;
+                        passivity = TensePassivity.ACTIVE;
                         tempInfleclist = VerbList.VerbShapes[tokens[0]];
                         tempInflec = null;
                         foreach (VerbInflection inflectionIter in tempInfleclist)
@@ -4425,7 +4731,7 @@ namespace VerbInflector
                         tempInflec = null;
                         foreach (VerbInflection inflectionIter in tempInfleclist)
                         {
-                            if (inflectionIter.IsPayehFelMasdari())
+						if (inflectionIter.IsPayehFelMasdari() && inflectionIter.Positivity==TensePositivity.POSITIVE)
                             {
                                 tempInflec = inflectionIter;
                                 break;
@@ -4451,7 +4757,7 @@ namespace VerbInflector
 
                     case 32:
                         tenseFormationType = TenseFormationType.AAYANDEH;
-                        passivity = TensePassivity.ACTIVE;
+                        passivity = TensePassivity.PASSIVE; //ToCheck
                         tempInfleclist = VerbList.VerbShapes[tokens[0]];
                         tempInflec = null;
                         foreach (VerbInflection inflectionIter in tempInfleclist)
@@ -4732,6 +5038,8 @@ namespace VerbInflector
                         }
                         verb = tempInflec.VerbRoot.Clone();
                         tempInfleclist = VerbList.VerbShapes[tokens[2]];
+
+
                         tempInflec = null;
                         foreach (VerbInflection inflectionIter in tempInfleclist)
                         {
@@ -4743,6 +5051,17 @@ namespace VerbInflector
                         }
                         shakhsType = tempInflec.Person;
                         positivity = TensePositivity.POSITIVE;
+
+						tempInfleclist = VerbList.VerbShapes[tokens[2]];
+						tempInflec = null;
+						foreach (VerbInflection inflectionIter in tempInfleclist)
+						{
+							if (inflectionIter.TenseForm == TenseFormationType.GOZASHTEH_SADEH)
+							{
+								tempInflec = inflectionIter;
+								break;
+							}
+						}
                         zamirPeyvastehType = tempInflec.ZamirPeyvasteh; zamirString = tempInflec.AttachedPronounString;
                         inflection = new VerbInflection(verb, zamirPeyvastehType, zamirString, shakhsType, tenseFormationType,
                                                          positivity, passivity);
@@ -4771,7 +5090,7 @@ namespace VerbInflector
                         tempInflec = null;
                         foreach (VerbInflection inflectionIter in tempInfleclist)
                         {
-                            if (inflectionIter.TenseForm == TenseFormationType.HAAL_SAADEH)
+						if (inflectionIter.TenseForm == TenseFormationType.HAAL_SAADEH  || inflectionIter.TenseForm == TenseFormationType.HAAL_ELTEZAMI)
                             {
                                 tempInflec = inflectionIter;
                                 break;
@@ -5118,6 +5437,21 @@ namespace VerbInflector
                         verb = tempInflec.VerbRoot.Clone();
                         positivity = tempInflec.Positivity;
 
+						tempInfleclist = VerbList.VerbShapes[tokens[1]];
+						tempInflec = null;
+						foreach (VerbInflection inflectionIter in tempInfleclist)
+						{
+							if (inflectionIter.TenseForm == TenseFormationType.PAYEH_MAFOOLI)
+							{
+								tempInflec = inflectionIter;
+								break;
+							}
+						}
+					if (tempInflec!=null){
+						positivity = tempInflec.Positivity;
+						passivity=TensePassivity.PASSIVE;
+					}
+
                         shakhsType = PersonType.THIRD_PERSON_SINGULAR;
 
                         zamirPeyvastehType = AttachedPronounType.AttachedPronoun_NONE; zamirString = "";
@@ -5292,7 +5626,7 @@ namespace VerbInflector
             }
             return outputResults;
         }
-
+	
         /// <summary>
         /// Get the verb tokens with their corresponding details
         /// </summary>
@@ -5305,7 +5639,7 @@ namespace VerbInflector
             var output = GetOutputResult(sentence);
             for (int i = 0; i < output.Count; i++)
             {
-                var values = output[i];
+	                var values = output[i];
                 string zamirString;
                 VerbInflection inflection;
                 TensePassivity passivity;
@@ -5857,7 +6191,7 @@ namespace VerbInflector
 
                     case 27:
                         tenseFormationType = TenseFormationType.GOZASHTEH_NAGHLI_SADEH;
-                        passivity = TensePassivity.PASSIVE;
+                        passivity = TensePassivity.ACTIVE;
                         tempInfleclist = VerbList.VerbShapes[tokens[0]];
                         tempInflec = null;
                         foreach (VerbInflection inflectionIter in tempInfleclist)
@@ -6030,7 +6364,7 @@ namespace VerbInflector
                         tempInflec = null;
                         foreach (VerbInflection inflectionIter in tempInfleclist)
                         {
-                            if (inflectionIter.IsPayehFelMasdari())
+                            if (inflectionIter.IsPayehFelMasdari() && inflectionIter.Positivity==TensePositivity.POSITIVE)
                             {
                                 tempInflec = inflectionIter;
                                 break;
@@ -6056,7 +6390,7 @@ namespace VerbInflector
 
                     case 32:
                         tenseFormationType = TenseFormationType.AAYANDEH;
-                        passivity = TensePassivity.ACTIVE;
+                        passivity = TensePassivity.PASSIVE;
                         tempInfleclist = VerbList.VerbShapes[tokens[0]];
                         tempInflec = null;
                         foreach (VerbInflection inflectionIter in tempInfleclist)
@@ -6336,6 +6670,22 @@ namespace VerbInflector
                             }
                         }
                         verb = tempInflec.VerbRoot.Clone();
+					positivity = TensePositivity.POSITIVE;
+					if(tempInflec.Positivity==TensePositivity.NEGATIVE)
+						positivity = TensePositivity.NEGATIVE;
+
+					tempInfleclist = VerbList.VerbShapes[tokens[1]];
+					tempInflec = null;
+					foreach (VerbInflection inflectionIter in tempInfleclist)
+					{
+
+							tempInflec = inflectionIter;
+							break;
+
+					}
+					if(tempInflec.Positivity==TensePositivity.NEGATIVE)
+						positivity = TensePositivity.NEGATIVE;
+
                         tempInfleclist = VerbList.VerbShapes[tokens[2]];
                         tempInflec = null;
                         foreach (VerbInflection inflectionIter in tempInfleclist)
@@ -6347,7 +6697,8 @@ namespace VerbInflector
                             }
                         }
                         shakhsType = tempInflec.Person;
-                        positivity = TensePositivity.POSITIVE;
+					if(tempInflec.Positivity==TensePositivity.NEGATIVE)
+						positivity = TensePositivity.NEGATIVE;
                         zamirPeyvastehType = tempInflec.ZamirPeyvasteh; zamirString = tempInflec.AttachedPronounString;
                         inflection = new VerbInflection(verb, zamirPeyvastehType, zamirString, shakhsType, tenseFormationType,
                                                          positivity, passivity);
@@ -6376,7 +6727,7 @@ namespace VerbInflector
                         tempInflec = null;
                         foreach (VerbInflection inflectionIter in tempInfleclist)
                         {
-                            if (inflectionIter.TenseForm == TenseFormationType.HAAL_SAADEH)
+						if (inflectionIter.TenseForm == TenseFormationType.HAAL_SAADEH || inflectionIter.TenseForm == TenseFormationType.HAAL_ELTEZAMI)
                             {
                                 tempInflec = inflectionIter;
                                 break;
@@ -6722,7 +7073,20 @@ namespace VerbInflector
                         }
                         verb = tempInflec.VerbRoot.Clone();
                         positivity = tempInflec.Positivity;
-
+						tempInfleclist = VerbList.VerbShapes[tokens[1]];
+						tempInflec = null;
+						foreach (VerbInflection inflectionIter in tempInfleclist)
+						{
+							if (inflectionIter.TenseForm == TenseFormationType.PAYEH_MAFOOLI)
+							{
+								tempInflec = inflectionIter;
+								break;
+							}
+						}
+					if (tempInflec!=null){
+						positivity = tempInflec.Positivity;
+						passivity=TensePassivity.PASSIVE;
+					}
                         shakhsType = PersonType.THIRD_PERSON_SINGULAR;
 
                         zamirPeyvastehType = AttachedPronounType.AttachedPronoun_NONE; zamirString = "";

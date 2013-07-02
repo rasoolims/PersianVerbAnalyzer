@@ -1,84 +1,70 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
+    <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{BCC8CF45-8466-4C4C-B8B1-BCC6AD2946D7}</ProjectGuid>
+    <ProjectGuid>{A938C071-9A6A-4468-8822-1D82BCC2C296}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SentenceRecognizer</RootNamespace>
+    <RootNamespace>DependencyBasedSentenceAnalyzer</RootNamespace>
     <AssemblyName>DependencyBasedSentenceAnalyzer</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
+    <DebugSymbols>True</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>..\LIB\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <Optimize>False</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DebugType>none</DebugType>
+    <Optimize>True</Optimize>
+    <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="DependencyBasedSentenceAnalyzer">
+      <HintPath>..\LIB\DependencyBasedSentenceAnalyzer.dll</HintPath>
+    </Reference>
     <Reference Include="SCICT.NLP.MorphologyAnalyser">
-      <HintPath>..\..\LIBS\SCICT.NLP.MorphologyAnalyser.dll</HintPath>
+      <HintPath>..\LIB\SCICT.NLP.MorphologyAnalyser.dll</HintPath>
     </Reference>
     <Reference Include="SCICT.NLP.Utility.Lemmatization">
-      <HintPath>..\..\LIBS\SCICT.NLP.Utility.Lemmatization.dll</HintPath>
+      <HintPath>..\LIB\SCICT.NLP.Utility.Lemmatization.dll</HintPath>
     </Reference>
     <Reference Include="SCICT.NLP.Utility.Verbs">
-      <HintPath>..\..\LIBS\SCICT.NLP.Utility.Verbs.dll</HintPath>
+      <HintPath>..\LIB\SCICT.NLP.Utility.Verbs.dll</HintPath>
     </Reference>
     <Reference Include="SCICT.PersianTools">
-      <HintPath>..\..\LIBS\SCICT.PersianTools.dll</HintPath>
+      <HintPath>..\LIB\SCICT.PersianTools.dll</HintPath>
     </Reference>
     <Reference Include="SCICT.Utility">
-      <HintPath>..\..\LIBS\SCICT.Utility.dll</HintPath>
+      <HintPath>..\LIB\SCICT.Utility.dll</HintPath>
     </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Activities" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xaml" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
     <Reference Include="YAXLib">
-      <HintPath>..\..\LIBS\YAXLib.dll</HintPath>
+      <HintPath>..\LIB\YAXLib.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Enums.cs" />
+    <Compile Include="AssemblyInfo.cs" />
     <Compile Include="DependencyBasedToken.cs" />
+    <Compile Include="Enums.cs" />
     <Compile Include="MorphoSyntacticFeatures.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SentenceAnalyzer.cs" />
     <Compile Include="VerbBasedSentence.cs" />
   </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <ProjectReference Include="..\VerbInflector\VerbInflector.csproj">
-      <Project>{55A183EA-6D8D-4B55-96CC-3DFE5A97948F}</Project>
+      <Project>{98090A77-CE59-4C5B-8CFB-76E5E603C56F}</Project>
       <Name>VerbInflector</Name>
     </ProjectReference>
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

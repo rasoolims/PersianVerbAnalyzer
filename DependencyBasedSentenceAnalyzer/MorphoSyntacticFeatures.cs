@@ -8,18 +8,22 @@ namespace DependencyBasedSentenceAnalyzer
 {
     public class MorphoSyntacticFeatures
     {
-        public MorphoSyntacticFeatures(NumberType num, PersonType pers, TenseFormationType tma)
+		public MorphoSyntacticFeatures(NumberType num, PersonType pers, TenseFormationType tma, TensePositivity posit, TensePassivity voice)
         {
             Number = num;
             Person = pers;
             TenseMoodAspect = tma;
+			Positivity = posit;
+			Voice = voice;
         }
 
-		public MorphoSyntacticFeatures(String num, String pers, String tma)
+		public MorphoSyntacticFeatures(String num, String pers, String tma, TensePositivity posit, TensePassivity voice)
 		{
 			Number = this.StringToNumber(num);
 			Person = this.StringToPerson(pers);
 			TenseMoodAspect = this.StringToTMA(tma);
+			Positivity = posit;
+			Voice = voice;
 		}
 
 		private TenseFormationType StringToTMA(string tma)
@@ -100,10 +104,12 @@ namespace DependencyBasedSentenceAnalyzer
         public NumberType Number { set; get; }
         public PersonType Person { set; get; }
         public TenseFormationType TenseMoodAspect { set; get; }
+		public TensePositivity Positivity  { set; get; }
+		public TensePassivity Voice { set; get; }
 
         public MorphoSyntacticFeatures Clone()
         {
-            return new MorphoSyntacticFeatures(Number, Person, TenseMoodAspect);
+            return new MorphoSyntacticFeatures(Number, Person, TenseMoodAspect,Positivity,Voice);
         }
     }
 }

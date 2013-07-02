@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -112,6 +112,10 @@ namespace VerbInflector
                                         vowelEnd, maziVowel, mozarehVowel);
                     if (fields[7] == "*")
                         amrShodani = false;
+					var istran=true;
+					if(transitivity==VerbTransitivity.InTransitive)
+						istran=false;
+
                     if (!CompoundVerbDic.ContainsKey(verb))
                         CompoundVerbDic.Add(verb, new Dictionary<string, Dictionary<string, bool>>());
                     if (!CompoundVerbDic[verb].ContainsKey(nonVerbalElemant))
@@ -119,7 +123,7 @@ namespace VerbInflector
                         CompoundVerbDic[verb].Add(nonVerbalElemant, new Dictionary<string, bool>());
                     }
                     if (!CompoundVerbDic[verb][nonVerbalElemant].ContainsKey(""))
-                        CompoundVerbDic[verb][nonVerbalElemant].Add("", amrShodani);
+                        CompoundVerbDic[verb][nonVerbalElemant].Add("", istran);
 
                 }
                 else if (vtype == 4)
@@ -153,6 +157,9 @@ namespace VerbInflector
                                         vowelEnd, maziVowel, mozarehVowel);
                     if (fields[7] == "*")
                         amrShodani = false;
+					var istrans=true;
+					if(transitivity==VerbTransitivity.InTransitive)
+						istrans=false;
                     if (!CompoundVerbDic.ContainsKey(verb))
                         CompoundVerbDic.Add(verb, new Dictionary<string, Dictionary<string, bool>>());
                     if (!CompoundVerbDic[verb].ContainsKey(nonVerbalElemant))
@@ -160,7 +167,7 @@ namespace VerbInflector
                         CompoundVerbDic[verb].Add(nonVerbalElemant, new Dictionary<string, bool>());
                     }
                     if (!CompoundVerbDic[verb][nonVerbalElemant].ContainsKey(""))
-                        CompoundVerbDic[verb][nonVerbalElemant].Add("", amrShodani);
+						CompoundVerbDic[verb][nonVerbalElemant].Add("", istrans);
                 }
                 else if (vtype == 5 || vtype == 7)
                 {
@@ -198,6 +205,9 @@ namespace VerbInflector
                                         vowelEnd, maziVowel, mozarehVowel);
                     if (fields[7] == "*")
                         amrShodani = false;
+					var istrans=true;
+					if(transitivity==VerbTransitivity.InTransitive)
+						istrans=false;
                     if (!CompoundVerbDic.ContainsKey(verb))
                         CompoundVerbDic.Add(verb, new Dictionary<string, Dictionary<string, bool>>());
                     if (!CompoundVerbDic[verb].ContainsKey(nonVerbalElemant))
@@ -206,7 +216,7 @@ namespace VerbInflector
                     }
                     if (!CompoundVerbDic[verb][nonVerbalElemant].ContainsKey(harfeEazafeh))
 
-                        CompoundVerbDic[verb][nonVerbalElemant].Add(harfeEazafeh, amrShodani);
+                        CompoundVerbDic[verb][nonVerbalElemant].Add(harfeEazafeh, istrans);
                 }
             }
             var verbtext = new StringBuilder();
@@ -221,7 +231,7 @@ namespace VerbInflector
             VerbShapes.Add("نمی‌توان", new List<VerbInflection>());
             VerbShapes["نمی‌توان"].Add(nemitavanInflection);
 
-    		VerbShapes.Add("میتوان", new List<VerbInflection>());
+			VerbShapes.Add("میتوان", new List<VerbInflection>());
 			VerbShapes["میتوان"].Add(mitavanInflection);
 			VerbShapes.Add("نمیتوان", new List<VerbInflection>());
 			VerbShapes["نمیتوان"].Add(nemitavanInflection);
@@ -279,9 +289,11 @@ namespace VerbInflector
 										foreach (string list in output)
 										{
 											output2.Add (list);
+											//Console.WriteLine(list);
 											if (list.Contains("می‌")){
 												var newshape=list.Replace("می‌","می");
 												output2.Add (newshape);
+												//Console.WriteLine(newshape);
 											}
 												
 										}
